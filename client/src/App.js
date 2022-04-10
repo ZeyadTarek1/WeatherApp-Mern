@@ -1,19 +1,15 @@
 import React, { useState, useSyncExternalStore } from "react";
 import "./App.css";
 import City from "./components/card/City";
-import imgMoon from "./img/moon.svg";
-import imgSun from "./img/sun.svg";
 
 function App() {
     const getValue = async () => {
-        console.log(citySearch);
-
-        const result = await fetch(
-            `http://localhost:5000/getweather?address=${citySearch}`
-        ); //fetch data from API
+        // console.log(citySearch);
+        // `http://localhost:5000/getweather?address=${citySearch}`
+        const result = await fetch(`http://localhost:5000/getweather`); //fetch data from API
         let dataJson = await result.json();
         setNewCity(dataJson);
-        console.log(dataJson);
+        // console.log(dataJson);
     };
 
     const [newCity, setNewCity] = useState([]);
@@ -42,14 +38,22 @@ function App() {
                 />
             </div>
 
-            {newCity.map((data) => (
+            {newCity.map((data, i) => (
                 <City
-                    key={data.id}
-                    name={data.name}
-                    forecast={data.forecast}
-                    img={data.img}
-                    lat={data.lat}
-                    long={data.long}
+                    key={i}
+                    name={data.location.name}
+                    temperature={data.current.temperature}
+                    lat={data.location.lat}
+                    long={data.location.lon}
+                    weatherDesc={data.current.weather_descriptions[0]}
+                    wind={data.current.wind_dir}
+                    precipitation={data.current.precip}
+                    feelsLike={data.current.feelslike}
+                    humidity={data.current.humidity}
+                    visibility={data.current.visibility}
+                    pressure={data.current.pressure}
+                    uvIndex={data.current.uv_index}
+                    windSpeed={data.current.wind_speed}
                 />
             ))}
         </div>
