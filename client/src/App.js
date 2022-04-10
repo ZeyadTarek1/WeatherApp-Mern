@@ -1,58 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useState, useSyncExternalStore } from "react";
+import "./App.css";
+import City from "./components/card/City";
+import imgMoon from "./img/moon.svg";
+import imgSun from "./img/sun.svg";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+    const getValue = async () => {
+        console.log(citySearch);
+
+        const result = await fetch(
+            `http://localhost:5000/getweather?address=${citySearch}`
+        ); //fetch data from API
+        let dataJson = await result.json();
+        setNewCity(dataJson);
+        console.log(dataJson);
+    };
+
+    const [newCity, setNewCity] = useState([]);
+    const [citySearch, setCitySearch] = useState("");
+
+    return (
+        <div className="App">
+            <h1>Weather Data Lookup</h1>
+            <p className="appText">Search for a city: </p>
+            <div className="inputForm">
+                <input
+                    className="textInput"
+                    type="text"
+                    id="cityName"
+                    name="cityName"
+                    placeholder="City"
+                    value={citySearch}
+                    onChange={(e) => setCitySearch(e.target.value)}
+                />
+                <input
+                    className="searchBtn"
+                    type="submit"
+                    id="submitCity"
+                    name="submitCity"
+                    onClick={getValue}
+                />
+            </div>
+
+            {newCity.map((data) => (
+                <City
+                    key={data.id}
+                    name={data.name}
+                    forecast={data.forecast}
+                    img={data.img}
+                    lat={data.lat}
+                    long={data.long}
+                />
+            ))}
+        </div>
+    );
 }
 
 export default App;

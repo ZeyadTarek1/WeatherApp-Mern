@@ -1,0 +1,26 @@
+.city {
+    display: inline-block;
+    float: none;
+    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+    border-radius: 10px;
+    transition: 0.3s;
+    width: 50%;
+    margin: 50px auto;
+}
+
+img {
+    display: block;
+    margin: auto;
+    width: 80px;
+}
+
+h2 {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+}
+p {
+    text-align: center;
+}
