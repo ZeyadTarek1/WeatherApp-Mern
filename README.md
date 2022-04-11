@@ -29,7 +29,7 @@
 ## Download
 
 ```terminal
-$ git clone https://github.com/ZeyadTarek1/Espresso-Maker.git
+$ git clone https://github.com/ZeyadTarek1/WeatherApp-Mern.git
 ```
 
 # Install
